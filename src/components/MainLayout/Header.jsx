@@ -3,6 +3,7 @@ import logoImg from "/logo.png"
 import { format } from 'date-fns';
 import MyContainer from './MyContainer';
 import Marquee from 'react-fast-marquee';
+import Navbar from '../Navbar';
 const Header = () => {
     return (
         <div>
@@ -19,6 +20,7 @@ const Header = () => {
                 <p className='text-lg font-semibold'>Foreign Investment in Bangladesh Reaches Record High in Fiscal Year 2024-25</p>
             </Marquee>
            </MyContainer>
+           <Navbar/>
         </div>
     );
 };

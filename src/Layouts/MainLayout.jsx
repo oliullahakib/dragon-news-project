@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { Outlet } from 'react-router';
 import Header from '../components/MainLayout/Header';
 import LeftAside from '../components/MainLayout/LeftAside';
+import RightAside from '../components/MainLayout/RightAside';
 
 const categoriesPromiss = fetch('/categories.json').then(res=>res.json())
 
@@ -16,7 +17,7 @@ const MainLayout = () => {
                </Suspense>
             </div>
             <div className='col-span-6'> <Outlet/></div>
-            <div className='right col-span-3'>right aside</div>
+            <div className='right col-span-3'><RightAside/></div>
           </main>
         </div>
     );

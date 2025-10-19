@@ -8,6 +8,8 @@ import Register from "../Pages/Register";
 import NewsDetails from "../Layouts/NewsDetails";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import LoadingPage from "../components/LoadingPage";
+import ErrorPage from "../components/ErrorPage";
+import UpCommingPage from "../components/UpCommingPage";
 
 export const router = createBrowserRouter([
     {
@@ -45,5 +47,19 @@ export const router = createBrowserRouter([
         element:<PrivateRoute><NewsDetails/></PrivateRoute>,
         loader:()=>fetch('/news.json'),
         hydrateFallbackElement:<LoadingPage/>
+    },
+    {
+        path:'/about',
+        Component:UpCommingPage
+    }
+    ,
+    {
+        path:'/career',
+        Component:UpCommingPage
+    }
+    ,
+    {
+        path:'/*',
+        Component:ErrorPage
     }
 ])

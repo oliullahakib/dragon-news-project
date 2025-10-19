@@ -5,7 +5,7 @@ import Marquee from 'react-fast-marquee';
 const LatestNews = ({newsPromiss}) => {
  const newsData = use(newsPromiss);
  const brakingNews = newsData.filter(news=>news.others?.is_trending&&news.others?.is_today_pick);
- console.log(brakingNews);
+ //console.log(brakingNews);
     return (
         <MyContainer className="latestNews flex items-center gap-5 bg-base-300 p-3">
             <button className='btn btn-secondary text-xl font-medium'>Latest</button>

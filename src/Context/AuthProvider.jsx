@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { AuthContext } from './AuthContex';
-import { createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GithubAuthProvider, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import { auth } from '../firebase/firebase.config';
 import LoadingPage from '../components/LoadingPage';
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true)
+    const googleProvider = new GoogleAuthProvider();
+    const gitHubProvider = new GithubAuthProvider();
     // console.log(user)
     const creatUser = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password)
@@ -22,6 +24,14 @@ const AuthProvider = ({ children }) => {
     }
     const resetUserPass = (email) => {
         return sendPasswordResetEmail(auth, email)
+    }
+    // google login 
+    const googleLogin = ()=>{
+        return signInWithPopup(auth,googleProvider);
+    }
+    // gitHub login 
+const gitHubLogin = ()=>{
+        return signInWithPopup(auth,gitHubProvider);
     }
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -40,7 +50,9 @@ const AuthProvider = ({ children }) => {
         updateUser,
         loading,
         setLoading,
-        resetUserPass
+        resetUserPass,
+        googleLogin,
+        gitHubLogin
     }
     return <AuthContext value={value}>
         {loading ? <LoadingPage/> : children}

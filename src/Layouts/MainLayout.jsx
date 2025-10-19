@@ -19,6 +19,7 @@ const MainLayout = () => {
             <div className='col-span-6'> <Outlet/></div>
             <div className='right col-span-3'><RightAside/></div>
           </main>
+         
         </div>
     );
 };

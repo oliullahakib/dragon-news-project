@@ -1,10 +1,11 @@
 import React, { use } from 'react';
 import MyContainer from './MainLayout/MyContainer';
-import { Link, NavLink } from 'react-router';
+import { Link, NavLink, useLocation } from 'react-router';
 import userLogo from "../assets/user.png"
 import { AuthContext } from '../Context/AuthContex';
 import { toast } from 'react-toastify';
 const Navbar = () => {
+    const location = useLocation()
     const { logOutUser,user,loading } = use(AuthContext);
     // console.log(user)
     if(loading) return <span className="loading loading-spinner loading-xl"></span>
@@ -46,7 +47,7 @@ const Navbar = () => {
                     <p className='text-lg font-semibold'>{user?.displayName? user?.displayName : "Guest"}</p>
                     {user?<img className='w-12 h-12 rounded-full' src={user?.photoURL} alt={user.name} />:<img src={userLogo} alt="guest" />}
                     {
-                      user?<button onClick={handleLogout} className='btn btn-secondary'>Logout</button> :  <Link to={"/auth/login"} className="btn btn-primary px-8">Login</Link>
+                      user?<button onClick={handleLogout} className='btn btn-secondary'>Logout</button> :  <Link state={location.pathname} to={"/auth/login"} className="btn btn-primary px-8">Login</Link>
                     
                     }
                 </div>

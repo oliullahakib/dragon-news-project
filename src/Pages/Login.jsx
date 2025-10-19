@@ -5,7 +5,8 @@ import { toast } from 'react-toastify';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Login = () => {
-    const location = useLocation()
+    const location = useLocation();
+    // console.log(location)
     const { logInUser, resetUserPass } = use(AuthContext);
     const navigate = useNavigate();
     const [show, setShow] = useState(false)

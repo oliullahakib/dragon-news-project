@@ -5,7 +5,9 @@ import userLogo from "../assets/user.png"
 import { AuthContext } from '../Context/AuthContex';
 import { toast } from 'react-toastify';
 const Navbar = () => {
-    const { logOutUser,user } = use(AuthContext)
+    const { logOutUser,user,loading } = use(AuthContext);
+    console.log(user)
+    if(loading) return <span className="loading loading-spinner loading-xl"></span>
     const links = <>
         <li> <NavLink to={"/"}>Home</NavLink></li>
         <li> <NavLink to={"/about"}>About</NavLink></li>
@@ -42,7 +44,7 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-end space-x-2">
                     <p className='text-lg font-semibold'>{user?.displayName? user?.displayName : "Guest"}</p>
-                    {user?.photoURL?<img className='w-12 h-12 rounded-full' src={user?.photoURL} alt={user.name} />:<img src={userLogo} alt="guest" />}
+                    {user?<img className='w-12 h-12 rounded-full' src={user?.photoURL} alt={user.name} />:<img src={userLogo} alt="guest" />}
                     {
                       user?<button onClick={handleLogout} className='btn btn-secondary'>Logout</button> :  <Link to={"/auth/login"} className="btn btn-primary px-8">Login</Link>
                     

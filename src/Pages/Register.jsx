@@ -5,22 +5,35 @@ import { toast } from 'react-toastify';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Register = () => {
-    const { creatUser, updateUser } = use(AuthContext);
+    const { creatUser, updateUser,setUser } = use(AuthContext);
     const navigate = useNavigate()
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState(false);
+    const [passError, setPassError] = useState('');
+    const [nameError, setNameError] = useState('');
     const handleRegister = (e) => {
         e.preventDefault()
-        const name = e?.target?.name?.value
+        const name = e?.target?.name?.value;
+        if(name.length<5) return setNameError("Name Should be Atlest 5 Charecters.")
         const photo = e?.target?.photo?.value
         const email = e?.target?.email?.value
         const terms = e?.target?.terms.checked;
         if(!terms) return alert("Please Accept Our Terms and Conditions.")
-        const password = e?.target?.password?.value
+        const password = e?.target?.password?.value;
+
+        // varify password 
+        const charCheckRegex = /^.{6,}$/;
+        if(!charCheckRegex.test(password)) return setPassError("Minimum 6 characters Needed");
+        const caseCheckRegex = /^(?=.*[a-z])(?=.*[A-Z]).+$/;
+        if(!caseCheckRegex.test(password)) return setPassError('One uppercase and one lowercase letter Needed');
+        const specialCharRegex = /^(?=.*[!@#$%^&*]).+$/;
+        if(!specialCharRegex.test(password)) return setPassError("One special character Needed");
+
+        // logIn user 
         creatUser(email, password)
             .then((userCredential) => {
                 // Signed up 
                 const user = userCredential.user;
-
+                // setLoading(true)
                 // update user 
                 const userObj = {
                     displayName: name,
@@ -29,12 +42,14 @@ const Register = () => {
                 updateUser(user, userObj)
                     .then(() => {
                         toast.info("User Updated")
+                        setUser({ ...user, displayName: name, photoURL: photo });
+                        // setLoading(false);
+                        navigate("/")
                     }).catch((error) => {
                         toast.error(error)
                     });
                 toast.success("User Created Successfully")
-                console.log("submite register", { user });
-                navigate("/")
+                
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -49,6 +64,7 @@ const Register = () => {
                     {/* name */}
                     <label className="label">Name</label>
                     <input required name='name' type="text" className="input w-full" placeholder="Name" />
+                    <p className='text-secondary'>{nameError}</p>
                     {/* Photo */}
                     <label className="label">Photo URL</label>
                     <input required name='photo' type="text" className="input w-full" placeholder="Photo URL" />
@@ -60,6 +76,7 @@ const Register = () => {
                         <label className="label">Password</label>
                         <input required name='password' type={show ? "text" : "password"} className="input w-full" placeholder="Password" />
                         <span className='btn btn-xs absolute top-6 right-3 ' onClick={() => setShow(!show)}>{show ? <FaEyeSlash /> : <FaEye />}</span>
+                        <p className='text-secondary'>{passError}</p>
                     </div>
                     {/* terms and conditions  */}
                     <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">

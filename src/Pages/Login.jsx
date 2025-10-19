@@ -1,10 +1,11 @@
 import React, { use, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../Context/AuthContex';
 import { toast } from 'react-toastify';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Login = () => {
+    const location = useLocation()
     const { logInUser, resetUserPass } = use(AuthContext);
     const navigate = useNavigate();
     const [show, setShow] = useState(false)
@@ -14,10 +15,10 @@ const Login = () => {
         const email = e?.target?.email?.value
         const password = e?.target?.password?.value
         logInUser(email, password)
-            .then((res) => {
+            .then(() => {
                 toast.success("Login Successfully")
-                console.log(res.user)
-                navigate("/")
+                // console.log(res.user)
+                navigate(`${location.state}`)
             })
             .catch((error) => {
                 const errorCode = error.code;

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Bookmark, Share2, Eye, Star, StarHalf } from 'lucide-react';
+import { Link } from 'react-router';
 const NewsCard = ({ news }) => {
   // Destructure and format the necessary data
-  const { title, rating, total_view, author, thumbnail_url, details, tags } = news;
+  const { title, rating, total_view, author, thumbnail_url, details, tags,id } = news;
 
   // Function to format the date string (e.g., "August 24, 2022")
   const formatDate = (dateString) => {
@@ -92,9 +93,9 @@ const NewsCard = ({ news }) => {
         <p className="text-sm text-gray-600 mb-3">
           <span className="font-bold">{tagCloudDate}</span> | Tag Cloud Tags: {tags.join(', ')} – {detailSnippet}
         </p>
-        <button className="text-red-500 font-semibold text-sm hover:text-red-600 transition-colors">
+        <Link to={`/news-details/${id}`} className="text-red-500 font-semibold text-sm hover:text-red-600 transition-colors cursor-pointer">
           Read More
-        </button>
+        </Link>
       </div>
 
       {/* 5. Footer (Rating and Views) */}

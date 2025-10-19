@@ -3,13 +3,20 @@ import { Outlet } from 'react-router';
 import Header from '../components/MainLayout/Header';
 import LeftAside from '../components/MainLayout/LeftAside';
 import RightAside from '../components/MainLayout/RightAside';
+import LatestNews from '../components/MainLayout/LatestNews';
+import Navbar from '../components/Navbar';
 
 const categoriesPromiss = fetch('/categories.json').then(res=>res.json())
 
 const MainLayout = () => {
     return (
         <div>
-            <Header/>
+            <header>
+              <Header/>
+              <LatestNews/>
+              <Navbar/>
+            </header>
+
           <main className='grid grid-cols-12 container mx-auto gap-5'>
             <div className='left col-span-3'>
                <Suspense fallback= <span className="loading loading-spinner loading-xl"></span> >

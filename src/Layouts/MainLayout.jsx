@@ -5,15 +5,19 @@ import LeftAside from '../components/MainLayout/LeftAside';
 import RightAside from '../components/MainLayout/RightAside';
 import LatestNews from '../components/MainLayout/LatestNews';
 import Navbar from '../components/Navbar';
+import LoadingPage from '../components/LoadingPage';
 
-const categoriesPromiss = fetch('/categories.json').then(res=>res.json())
+const categoriesPromiss = fetch('/categories.json').then(res=>res.json());
+const newsPromiss = fetch('/news.json').then(res=>res.json());
 
 const MainLayout = () => {
     return (
         <div>
             <header>
               <Header/>
-              <LatestNews/>
+             <Suspense fallback={<LoadingPage/>} >
+               <LatestNews newsPromiss={newsPromiss} />
+             </Suspense>
               <Navbar/>
             </header>
 

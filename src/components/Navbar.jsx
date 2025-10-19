@@ -6,7 +6,7 @@ import { AuthContext } from '../Context/AuthContex';
 import { toast } from 'react-toastify';
 const Navbar = () => {
     const { logOutUser,user,loading } = use(AuthContext);
-    console.log(user)
+    // console.log(user)
     if(loading) return <span className="loading loading-spinner loading-xl"></span>
     const links = <>
         <li> <NavLink to={"/"}>Home</NavLink></li>
